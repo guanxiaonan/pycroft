@@ -33,7 +33,7 @@ class TrafficVolume(ModelBase):
                         backref=backref("traffic_volumes",
                                         cascade="all, delete-orphan"),
                         uselist=False)
-    type = Column(Enum("IN", "OUT", name="traffic_direction"),
+    type = Column(Enum("Ingress", "Egress", name="traffic_direction"),
                   nullable=False)
     amount = Column(BigInteger, CheckConstraint('amount >= 0'),
                     nullable=False)
