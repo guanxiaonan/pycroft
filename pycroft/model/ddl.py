@@ -98,7 +98,7 @@ def visit_create_function(element, compiler, **kw):
     Compile a CREATE FUNCTION DDL statement for PostgreSQL
     """
     func = element.function
-    opt_or_replace = 'OR REPLACE' if func.or_replace else None
+    opt_or_replace = 'OR REPLACE' if element.or_replace else None
     strictness = "STRICT" if func.strict else None
     leakproof = "LEAKPROOF" if func.leakproof else None
     quoted_definition = "${quote_tag}$\n{definition}\n${quote_tag}$".format(
