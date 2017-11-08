@@ -6,14 +6,14 @@ from sqlalchemy import Column, ForeignKey, UniqueConstraint
 from sqlalchemy.orm import backref, relationship
 from sqlalchemy.types import Boolean, Integer, String
 
-from pycroft.model.base import ModelBase
+from pycroft.model.base import IntegerIdModel
 
 
-class Site(ModelBase):
+class Site(IntegerIdModel):
     name = Column(String(255), nullable=False)
 
 
-class Building(ModelBase):
+class Building(IntegerIdModel):
     site_id = Column(Integer, ForeignKey(Site.id), nullable=False)
     site = relationship(Site, backref=backref("buildings"))
     number = Column(String(3), nullable=False)
@@ -23,7 +23,7 @@ class Building(ModelBase):
     __table_args__ = (UniqueConstraint("street", "number", name="address"),)
 
 
-class Room(ModelBase):
+class Room(IntegerIdModel):
     number = Column(String(36), nullable=False)
     level = Column(Integer, nullable=False)
     inhabitable = Column(Boolean, nullable=False)

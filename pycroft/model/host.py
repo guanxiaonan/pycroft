@@ -10,7 +10,7 @@ from pycroft.helpers.i18n import gettext
 from pycroft.helpers.net import mac_regex
 from pycroft.lib.net import MacExistsException
 
-from pycroft.model.base import ModelBase
+from pycroft.model.base import ModelBase, IntegerIdModel
 from pycroft.model.facilities import Room
 from pycroft.model.net import Subnet
 from pycroft.model.user import User
@@ -18,7 +18,7 @@ from pycroft.model.types import (
     IPAddress, MACAddress, InvalidMACAddressException)
 
 
-class Host(ModelBase):
+class Host(IntegerIdModel):
     discriminator = Column('type', String(50), nullable=False)
     __mapper_args__ = {'polymorphic_on': discriminator}
 
@@ -81,7 +81,7 @@ class TypeMismatch(Exception):
     pass
 
 
-class Interface(ModelBase):
+class Interface(IntegerIdModel):
     """A logical network interface (hence the single MAC address), which means
     many net interfaces can be connected to the same switch port"""
 
@@ -156,7 +156,7 @@ class ServerInterface(Interface):
                                     foreign_keys=[switch_interface_id])
 
 
-class IP(ModelBase):
+class IP(IntegerIdModel):
     address = Column(IPAddress, nullable=False, unique=True)
     interface_id = Column(Integer,
                           ForeignKey(Interface.id, ondelete="CASCADE"),

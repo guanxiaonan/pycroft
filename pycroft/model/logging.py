@@ -13,11 +13,11 @@
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy.types import Integer, DateTime, Text, String
-from pycroft.model.base import ModelBase
+from pycroft.model.base import IntegerIdModel
 from pycroft.model.functions import utcnow
 
 
-class LogEntry(ModelBase):
+class LogEntry(IntegerIdModel):
     discriminator = Column('type', String(50))
     __mapper_args__ = {'polymorphic_on': discriminator}
 
@@ -32,7 +32,7 @@ class LogEntry(ModelBase):
     author_id = Column(Integer, ForeignKey("user.id"))
 
 
-class UserLogEntry(LogEntry):
+class UserLogEntry(IntegerIdModel):
     __mapper_args__ = {'polymorphic_identity': 'user_log_entry'}
     id = Column(Integer, ForeignKey(LogEntry.id, ondelete="CASCADE"),
                 primary_key=True)
